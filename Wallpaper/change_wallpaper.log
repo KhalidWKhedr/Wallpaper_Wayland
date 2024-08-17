@@ -338,3 +338,9 @@
 2024-08-17 04:24:41 - There are still running mpvpaper processes after cleanup.
 17001 mpvpaper --mpv-options=hwdec=auto --no-audio --loop HDMI-A-1 /home/khalidwaleedkhedr/Videos/Wallpapers/SkeletonRipples.mp4
 17002 mpvpaper --mpv-options=hwdec=auto --no-audio --loop eDP-1 /home/khalidwaleedkhedr/Videos/Wallpapers/SkeletonRipples.mp4
+2024-08-17 04:43:11 - Using video wallpaper: /home/khalidwaleedkhedr/Videos/Wallpapers/SkeletonRipples.mp4
+2024-08-17 04:43:11 - Attempting to kill all mpvpaper processes.
+2024-08-17 04:43:11 - No running mpvpaper processes found.
+2024-08-17 04:43:12 - There are still running mpvpaper processes after cleanup.
+1239 mpvpaper --mpv-options=hwdec=auto --no-audio --loop HDMI-A-1 /home/khalidwaleedkhedr/Videos/Wallpapers/SkeletonRipples.mp4
+1240 mpvpaper --mpv-options=hwdec=auto --no-audio --loop eDP-1 /home/khalidwaleedkhedr/Videos/Wallpapers/SkeletonRipples.mp4

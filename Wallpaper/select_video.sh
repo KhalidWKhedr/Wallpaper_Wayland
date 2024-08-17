@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# Set the directory where your video wallpapers are stored
+VIDEO_DIR="/home/khalidwaleedkhedr/Videos/Wallpapers"
+LOGFILE="$HOME/.config/hypr/Wallpaper/change_wallpaper.log"
+WALLPAPER_FILE="$HOME/.config/hypr/Wallpaper/current_wallpaper.txt"
+
+# Function to log messages
+log_message() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" >> "$LOGFILE"
+}
+
+# Check if the directory exists
+if [ ! -d "$VIDEO_DIR" ]; then
+    log_message "Directory $VIDEO_DIR does not exist."
+    echo "Directory $VIDEO_DIR does not exist."
+    exit 1
+fi
+
+# List video files
+VIDEO_LIST=$(find "$VIDEO_DIR" -type f \( -iname "*.mp4" -o -iname "*.mkv" \))
+
+# Check if the list is empty
+if [ -z "$VIDEO_LIST" ]; then
+    log_message "No video files found in $VIDEO_DIR."
+    echo "No video files found."
+    exit 1
+fi
+
+# Use rofi to select a video
+SELECTED_VIDEO=$(echo "$VIDEO_LIST" | rofi -dmenu -i -p "Select wallpaper:")
+
+# Check if rofi command was successful
+if [ $? -ne 0 ]; then
+    log_message "rofi command failed or was canceled."
+    echo "Failed to list videos or selection was canceled."
+    exit 1
+fi
+
+# If a video was selected, change the wallpaper
+if [ -n "$SELECTED_VIDEO" ]; then
+    # Save the selected video to the wallpaper file
+    echo "$SELECTED_VIDEO" > "$WALLPAPER_FILE"
+    
+    # Check if the change_wallpaper.sh script exists and is executable
+    if [ -x "$HOME/.config/hypr/Wallpaper/change_wallpaper.sh" ]; then
+        log_message "Changing wallpaper to $SELECTED_VIDEO"
+        "$HOME/.config/hypr/Wallpaper/change_wallpaper.sh" "$SELECTED_VIDEO"
+    else
+        log_message "change_wallpaper.sh script not found or not executable."
+        echo "change_wallpaper.sh script not found or not executable."
+        exit 1
+    fi
+else
+    log_message "No video selected."
+    echo "No video selected."
+fi
+

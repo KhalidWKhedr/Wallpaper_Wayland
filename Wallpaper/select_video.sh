@@ -27,15 +27,21 @@ if [ -z "$VIDEO_LIST" ]; then
     exit 1
 fi
 
-# Use rofi to select a video
-SELECTED_VIDEO=$(echo "$VIDEO_LIST" | rofi -dmenu -i -p "Select wallpaper:")
+# Extract video titles from the full paths
+VIDEO_TITLES=$(echo "$VIDEO_LIST" | xargs -n 1 basename)
 
-# Check if rofi command was successful
+# Use fuzzel to select a video title
+SELECTED_TITLE=$(echo "$VIDEO_TITLES" | fuzzel --dmenu --prompt "Select wallpaper:")
+
+# Check if fuzzel command was successful
 if [ $? -ne 0 ]; then
-    log_message "rofi command failed or was canceled."
+    log_message "fuzzel command failed or was canceled."
     echo "Failed to list videos or selection was canceled."
     exit 1
 fi
+
+# Find the full path corresponding to the selected title
+SELECTED_VIDEO=$(echo "$VIDEO_LIST" | grep "/$SELECTED_TITLE$")
 
 # If a video was selected, change the wallpaper
 if [ -n "$SELECTED_VIDEO" ]; then
@@ -55,4 +61,3 @@ else
     log_message "No video selected."
     echo "No video selected."
 fi
-

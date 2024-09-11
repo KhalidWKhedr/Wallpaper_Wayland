@@ -72,3 +72,4 @@ else
     log_message "No mpvpaper processes running after cleanup."
 fi
 
+
